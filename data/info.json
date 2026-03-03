@@ -1,0 +1,8 @@
+{
+  "app": "SolarYA",
+  "version": "Entregable2",
+  "notas": [
+    "Los registros del usuario se guardan en localStorage.",
+    "Los cálculos son aproximados y se mejorarán en próximas entregas."
+  ]
+}

@@ -1,24 +1,126 @@
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Entregable 1 | SolarYA</title>
+  <title>SolarYA | Entregable 2</title>
+  <link rel="stylesheet" href="./css/styles.css" />
 </head>
-
 <body>
-  <main>
-    <h1>SolarYA — Simulador de consumo</h1>
-
-    <p>
-      Este simulador es una primera versión para SolarYA: ayuda a estimar el consumo (kWh),
-      el costo mensual de energía y un tamaño aproximado de sistema fotovoltaico (paneles solares)
-      para cubrir parte o todo el consumo. La idea es tener una lógica base que luego pueda crecer.
+  <header class="container">
+    <h1>SolarYA</h1>
+    <p class="subtitle">
+      Simulador web para estimar costo de energía y dimensionamiento básico de paneles solares.
+      (Versión Entrega #2: DOM, Eventos y localStorage)
     </p>
+  </header>
+
+  <main class="container grid">
+    <!-- Columna 1: Registro mensual -->
+    <section class="card">
+      <h2>1) Registrar consumo del mes</h2>
+
+      <form id="form-registro" class="form">
+        <div class="field">
+          <label for="mes">Mes</label>
+          <select id="mes" name="mes" required></select>
+        </div>
+
+        <div class="field">
+          <label for="consumo">Consumo (kWh)</label>
+          <input id="consumo" name="consumo" type="number" min="1" step="1" placeholder="Ej: 320" required />
+          <small class="hint">Dato típico: 150–600 kWh/mes</small>
+        </div>
+
+        <div class="field">
+          <label for="tarifa">Tarifa promedio ($/kWh)</label>
+          <input id="tarifa" name="tarifa" type="number" min="1" step="1" placeholder="Ej: 900" required />
+          <small class="hint">Depende de tu ciudad y operador</small>
+        </div>
+
+        <button class="btn primary" type="submit">Guardar registro</button>
+        <p id="msg-registro" class="msg" aria-live="polite"></p>
+      </form>
+
+      <div class="divider"></div>
+
+      <h3>Registros guardados</h3>
+      <div class="table-wrap">
+        <table class="table" aria-label="Tabla de registros">
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Consumo (kWh)</th>
+              <th>Tarifa ($/kWh)</th>
+              <th>Costo (COP)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tabla-registros">
+            <!-- JS inserta filas -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button id="btn-limpiar" class="btn danger" type="button">Borrar todo</button>
+      </div>
+      <p class="hint">
+        Los registros se guardan automáticamente en <strong>localStorage</strong> para que no se pierdan al recargar.
+      </p>
+    </section>
+
+    <!-- Columna 2: Cálculo solar -->
+    <section class="card">
+      <h2>2) Calcular sistema solar</h2>
+      <p class="hint">
+        Se calcula usando el <strong>último registro</strong> guardado (el más reciente).
+      </p>
+
+      <form id="form-solar" class="form">
+        <div class="field">
+          <label for="hsp">Horas sol pico (HSP) promedio</label>
+          <input id="hsp" name="hsp" type="number" min="0.1" step="0.1" placeholder="Ej: 4.5" required />
+        </div>
+
+        <div class="field">
+          <label for="cobertura">% a cubrir con solar</label>
+          <input id="cobertura" name="cobertura" type="number" min="1" max="100" step="1" placeholder="Ej: 70" required />
+          <small class="hint">Máx. 100%</small>
+        </div>
+
+        <div class="field">
+          <label for="panel">Potencia del panel</label>
+          <select id="panel" name="panel" required></select>
+        </div>
+
+        <button class="btn primary" type="submit">Calcular</button>
+        <p id="msg-solar" class="msg" aria-live="polite"></p>
+      </form>
+
+      <div class="divider"></div>
+
+      <h3>Resultado</h3>
+      <div id="resultado" class="result empty" aria-live="polite">
+        <p class="hint">Aún no hay cálculo. Guarda un registro y presiona “Calcular”.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <details class="details">
+        <summary>Notas (simplificado)</summary>
+        <ul>
+          <li>Este cálculo es aproximado y no considera pérdidas, inclinación, sombras, etc.</li>
+          <li>Sirve como base para practicar DOM, eventos y almacenamiento.</li>
+        </ul>
+      </details>
+    </section>
   </main>
 
-  <script src="./js/main.js"></script>
-</body>
+  <footer class="container footer">
+    <small>Entregable 2 — Felipe Reyes — SolarYA</small>
+  </footer>
 
+  <script src="./js/app.js"></script>
+</body>
 </html>
