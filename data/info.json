@@ -1,8 +1,15 @@
 {
   "app": "SolarYA",
-  "version": "Entregable2",
+  "version": "EntregaFinal",
+  "entregable": "Proyecto Final - Simulador interactivo en JavaScript",
+  "panelesW": [450, 500, 550, 600],
+  "defaults": {
+    "hsp": 4.5,
+    "cobertura": 70,
+    "panelW": 550
+  },
   "notas": [
     "Los registros del usuario se guardan en localStorage.",
-    "Los cálculos son aproximados y se mejorarán en próximas entregas."
+    "Los calculos son aproximados y se mejoraran en proximas entregas."
   ]
 }

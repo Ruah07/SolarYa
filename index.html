@@ -3,124 +3,200 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SolarYA | Entregable 2</title>
+  <title>SolarYA | Proyecto Final JS</title>
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="container">
-    <h1>SolarYA</h1>
-    <p class="subtitle">
-      Simulador web para estimar costo de energía y dimensionamiento básico de paneles solares.
-      (Versión Entrega #2: DOM, Eventos y localStorage)
-    </p>
+  <nav class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-mini">SolarYA Store</div>
+      <div class="top-links">
+        <a href="#catalogo-paneles">Paneles</a>
+        <a href="#form-solar">Cotizador</a>
+        <a href="#tabla-registros">Historial</a>
+      </div>
+      <button id="btn-cart" class="cart-pill" type="button" aria-label="Abrir carrito">
+        Carrito <span id="cart-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero-wrap">
+    <div class="container hero">
+      <div>
+        <p class="eyebrow">Tienda solar online</p>
+        <h1>SolarYA</h1>
+        <p class="subtitle">
+          Compra paneles solares y cotiza tu sistema residencial en minutos.
+          Simulador 100% interactivo con JavaScript.
+        </p>
+        <div class="hero-badges">
+          <span>Entrega nacional</span>
+          <span>Asesoria inicial gratis</span>
+          <span>Simulacion instantanea</span>
+        </div>
+      </div>
+      <aside class="hero-box">
+        <h2>Promocion del mes</h2>
+        <p>Hasta 15% de ahorro estimado en tu factura electrica mensual.</p>
+      </aside>
+    </div>
   </header>
 
-  <main class="container grid">
-    <!-- Columna 1: Registro mensual -->
-    <section class="card">
-      <h2>1) Registrar consumo del mes</h2>
+  <section class="container trust-strip">
+    <article class="trust-item">
+      <strong>+500</strong>
+      <span>Instalaciones asesoradas</span>
+    </article>
+    <article class="trust-item">
+      <strong>98%</strong>
+      <span>Clientes satisfechos</span>
+    </article>
+    <article class="trust-item">
+      <strong>24/7</strong>
+      <span>Acompanamiento comercial</span>
+    </article>
+  </section>
 
-      <form id="form-registro" class="form">
-        <div class="field">
-          <label for="mes">Mes</label>
-          <select id="mes" name="mes" required></select>
-        </div>
-
-        <div class="field">
-          <label for="consumo">Consumo (kWh)</label>
-          <input id="consumo" name="consumo" type="number" min="1" step="1" placeholder="Ej: 320" required />
-          <small class="hint">Dato típico: 150–600 kWh/mes</small>
-        </div>
-
-        <div class="field">
-          <label for="tarifa">Tarifa promedio ($/kWh)</label>
-          <input id="tarifa" name="tarifa" type="number" min="1" step="1" placeholder="Ej: 900" required />
-          <small class="hint">Depende de tu ciudad y operador</small>
-        </div>
-
-        <button class="btn primary" type="submit">Guardar registro</button>
-        <p id="msg-registro" class="msg" aria-live="polite"></p>
-      </form>
-
-      <div class="divider"></div>
-
-      <h3>Registros guardados</h3>
-      <div class="table-wrap">
-        <table class="table" aria-label="Tabla de registros">
-          <thead>
-            <tr>
-              <th>Mes</th>
-              <th>Consumo (kWh)</th>
-              <th>Tarifa ($/kWh)</th>
-              <th>Costo (COP)</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="tabla-registros">
-            <!-- JS inserta filas -->
-          </tbody>
-        </table>
+  <main class="container shop-layout">
+    <section class="card shop-card">
+      <div class="section-head">
+        <h2>Catalogo de paneles</h2>
+        <span class="chip">Stock actualizado</span>
       </div>
-
-      <div class="actions">
-        <button id="btn-limpiar" class="btn danger" type="button">Borrar todo</button>
-      </div>
-      <p class="hint">
-        Los registros se guardan automáticamente en <strong>localStorage</strong> para que no se pierdan al recargar.
-      </p>
+      <p class="hint">Selecciona un panel y se cargara automaticamente en la cotizacion.</p>
+      <div id="catalogo-paneles" class="catalog-grid" aria-live="polite"></div>
     </section>
 
-    <!-- Columna 2: Cálculo solar -->
-    <section class="card">
-      <h2>2) Calcular sistema solar</h2>
-      <p class="hint">
-        Se calcula usando el <strong>último registro</strong> guardado (el más reciente).
-      </p>
-
-      <form id="form-solar" class="form">
-        <div class="field">
-          <label for="hsp">Horas sol pico (HSP) promedio</label>
-          <input id="hsp" name="hsp" type="number" min="0.1" step="0.1" placeholder="Ej: 4.5" required />
+    <section class="grid cards-grid">
+      <section class="card">
+        <div class="section-head">
+          <h2>1) Tus datos de consumo</h2>
+          <span class="chip">Paso 1</span>
         </div>
 
-        <div class="field">
-          <label for="cobertura">% a cubrir con solar</label>
-          <input id="cobertura" name="cobertura" type="number" min="1" max="100" step="1" placeholder="Ej: 70" required />
-          <small class="hint">Máx. 100%</small>
+        <form id="form-registro" class="form">
+          <div class="field">
+            <label for="mes">Mes</label>
+            <select id="mes" name="mes" required></select>
+          </div>
+
+          <div class="field">
+            <label for="consumo">Consumo (kWh)</label>
+            <input id="consumo" name="consumo" type="number" min="1" step="1" placeholder="Ej: 320" required />
+            <small class="hint">Dato tipico: 150 a 600 kWh por mes</small>
+          </div>
+
+          <div class="field">
+            <label for="tarifa">Tarifa promedio ($/kWh)</label>
+            <input id="tarifa" name="tarifa" type="number" min="1" step="1" placeholder="Ej: 900" required />
+          </div>
+
+          <button class="btn primary" type="submit">Guardar consumo</button>
+          <p id="msg-registro" class="msg" aria-live="polite"></p>
+        </form>
+
+        <div class="divider"></div>
+
+        <h3>Historial de consumos guardados</h3>
+        <div class="table-wrap">
+          <table class="table" aria-label="Tabla de registros">
+            <thead>
+              <tr>
+                <th>Mes</th>
+                <th>Consumo (kWh)</th>
+                <th>Tarifa ($/kWh)</th>
+                <th>Costo (COP)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tabla-registros">
+              <!-- JS inserta filas -->
+            </tbody>
+          </table>
         </div>
 
-        <div class="field">
-          <label for="panel">Potencia del panel</label>
-          <select id="panel" name="panel" required></select>
+        <div class="actions">
+          <button id="btn-limpiar" class="btn danger" type="button">Borrar historial</button>
         </div>
+      </section>
 
-        <button class="btn primary" type="submit">Calcular</button>
-        <p id="msg-solar" class="msg" aria-live="polite"></p>
-      </form>
+      <section class="card">
+        <div class="section-head">
+          <h2>2) Cotiza tu sistema solar</h2>
+          <span class="chip">Paso 2</span>
+        </div>
+        <p class="hint">
+          El calculo usa el ultimo registro de consumo guardado.
+        </p>
 
-      <div class="divider"></div>
+        <form id="form-solar" class="form">
+          <div class="field">
+            <label for="hsp">Horas sol pico (HSP)</label>
+            <input id="hsp" name="hsp" type="number" min="0.1" step="0.1" placeholder="Ej: 4.5" required />
+          </div>
 
-      <h3>Resultado</h3>
-      <div id="resultado" class="result empty" aria-live="polite">
-        <p class="hint">Aún no hay cálculo. Guarda un registro y presiona “Calcular”.</p>
+          <div class="field">
+            <label for="cobertura">% de cobertura solar</label>
+            <input id="cobertura" name="cobertura" type="number" min="1" max="100" step="1" placeholder="Ej: 70" required />
+          </div>
+
+          <div class="field">
+            <label for="panel">Panel elegido</label>
+            <select id="panel" name="panel" required></select>
+          </div>
+
+          <button class="btn primary" type="submit">Cotizar ahora</button>
+          <p id="msg-solar" class="msg" aria-live="polite"></p>
+        </form>
+
+        <div class="divider"></div>
+
+        <h3>Resumen de cotizacion</h3>
+        <div id="resultado" class="result empty" aria-live="polite">
+          <p class="hint">Aun no hay cotizacion. Guarda un consumo y presiona "Cotizar ahora".</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="card social-proof">
+      <div class="section-head">
+        <h2>Clientes que ya cotizaron con SolarYA</h2>
+        <span class="chip">Resenas</span>
       </div>
+      <div class="reviews-grid">
+        <article class="review">
+          <p>"Muy facil comparar paneles y entender cuantos necesito."</p>
+          <small>- Laura, Medellin</small>
+        </article>
+        <article class="review">
+          <p>"En menos de 5 minutos ya tenia una cotizacion clara."</p>
+          <small>- Andres, Bogota</small>
+        </article>
+        <article class="review">
+          <p>"El historial me ayudo a probar distintos escenarios de consumo."</p>
+          <small>- Sara, Cali</small>
+        </article>
+      </div>
+    </section>
 
-      <div class="divider"></div>
-
-      <details class="details">
-        <summary>Notas (simplificado)</summary>
-        <ul>
-          <li>Este cálculo es aproximado y no considera pérdidas, inclinación, sombras, etc.</li>
-          <li>Sirve como base para practicar DOM, eventos y almacenamiento.</li>
-        </ul>
-      </details>
+    <section class="card cta-banner">
+      <div>
+        <h2>Listo para dar el siguiente paso?</h2>
+        <p id="shop-status" class="hint">
+          Selecciona un panel del catalogo y genera tu cotizacion para iniciar tu proceso.
+        </p>
+      </div>
+      <a class="btn primary cta-link" href="#form-solar">Ir al cotizador</a>
     </section>
   </main>
 
   <footer class="container footer">
-    <small>Entregable 2 — Felipe Reyes — SolarYA</small>
+    <small>Proyecto Final JS - Felipe Reyes - SolarYA</small>
+    <p id="meta-app" class="hint"></p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./js/app.js"></script>
 </body>
 </html>
